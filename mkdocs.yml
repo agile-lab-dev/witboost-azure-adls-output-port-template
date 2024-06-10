@@ -1,0 +1,8 @@
+site_name: "Azure ADLS Gen2 Output Port Template"
+site_description: "Create a Azure ADLS Gen2 Output Port using this template"
+
+nav:
+  - Template Usage: index.md
+
+plugins:
+  - techdocs-core
