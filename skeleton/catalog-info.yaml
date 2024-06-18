@@ -28,8 +28,8 @@ spec:
     version: ${{ dataProductMajorVersion + ".0.0" }}
     infrastructureTemplateId: ${{ values.infrastructureTemplateId }}
     useCaseTemplateId: ${{ values.useCaseTemplateId }}
-    dependsOn: {% if values.dependsOn | length > 0 %}{% for i in values.dependsOn %}
-      - ${{ i }}{% endfor %}{% else %}[]{% endif %}
+    dependsOn:
+      - ${{ values.dependsOn }}
     platform: Azure
     technology: ADLSGen2
     outputPortType: Files
@@ -85,7 +85,6 @@ spec:
     sampleData: {}
     semanticLinking: []
     specific:
-      storageAccount: ${{ values.storageAccount }}
       container: ${{ values.containerName }}
       path: {% if values.autogeneratePath %}
         ${{ values.prefixPath if values.prefixPath else "" }}data-products/${{ domainNameNormalized }}/${{ dataProductNameNormalized }}/${{ dataProductMajorVersion }}/${{ componentNameNormalized }}

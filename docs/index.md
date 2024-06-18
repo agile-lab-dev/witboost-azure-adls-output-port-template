@@ -1,7 +1,7 @@
 ### Prerequisites
 
 - A Data Product should already exist in order to attach the new components to it.
-- You can create an ADLS Gen2 component at any time, but at deployment the defined ADLS Gen2 Storage Account and Container must exist
+- An ADLS Gen2 Storage component must already exist on the Data Product
 
 ### Component Metadata
 
@@ -14,20 +14,21 @@ This section includes the basic information that any Component of Witboost must 
 - Data Product: The Data Product this Output Port belongs to, be sure to choose the right one.
 - Identifier: Unique ID for this new entity inside the domain. Don't worry to fill this field, it will be automatically filled for you.
 - Development Group: Development group of this Data Product. Don't worry to fill this field, it will be automatically filled for you.
-- Depends On: If you want your Output Port to depend on other components from the Data Product, you can choose this option (Optional).
+- Storage component dependency: The ADLS Gen2 Output Port component must have a single dependency, and this must be an existing ADLS Gen2 storage component present on the same data product. The options shown to the user will be picked from the data product selected by the user on the same step. The ADLS Gen2 storage account and containers information will be retrieved from the selected component.
 
 *Example:*
 
-| Field name              | Example value                                                                                      |
-|:------------------------|:---------------------------------------------------------------------------------------------------|
-| **Name**                | ADLS Gen2 Vaccinations Output Port                                                                 |
-| **Description**         | Exposes vaccinations data stored in an ADLS Gen2 folder                                            |
-| **Domain**              | domain:healthcare                                                                                  |
-| **Data Product**        | system:healthcare.vaccinationsdp.0                                                                 |
-| ***Identifier***        | Will look something like this: *healthcare.vaccinationsdp.0.adls-gen2-vaccinations-output-port*    |
-| ***Development Group*** | Might look something like this: *group:platformteam* Depends on the Data Product development group |
+| Field name                       | Example value                                                                                      |
+|:---------------------------------|:---------------------------------------------------------------------------------------------------|
+| **Name**                         | ADLS Gen2 Vaccinations Output Port                                                                 |
+| **Description**                  | Exposes vaccinations data stored in an ADLS Gen2 folder                                            |
+| **Domain**                       | domain:healthcare                                                                                  |
+| **Data Product**                 | system:healthcare.vaccinationsdp.0                                                                 |
+| ***Identifier***                 | Will look something like this: *healthcare.vaccinationsdp.0.adls-gen2-vaccinations-output-port*    |
+| ***Development Group***          | Might look something like this: *group:platformteam* Depends on the Data Product development group |
+| **Storage component dependency** | ADLSGen2-Storage                                                                                   | 
 
-#### Terms and Conditions & SLA (Editor Wizard)
+### Terms and Conditions & SLA (Editor Wizard)
 
 Specify Terms & Conditions and Service Level Agreement information for this Output Port. This information can only be filled using the Editor Wizard
 
@@ -46,7 +47,7 @@ Specify Terms & Conditions and Service Level Agreement information for this Outp
 | **Uptime**               | 99.9%                                |
 
 
-#### Data Sharing Agreement (Editor Wizard)
+### Data Sharing Agreement (Editor Wizard)
 
 Specify the Data Sharing Agreement clauses for this Data Product. This information can only be filled using the Editor Wizard.
 
@@ -101,10 +102,11 @@ Provide the schema metadata of the files stored in the folder to be created.
 
 ### Provide ADLS Gen2 directory information
 
-This section includes the necessary information to build the folder hierarchy inside an ADLS Gen2 instance. It asks the user for the appropriate Storage Account and Container names where this folder will be located, and asks the user for the folder path or provides the functionality to autogenerate one. When using the automatic generation feature, it allows the user to optionally write a custom prefix path to a folder where the hierarchy will be created. 
+This section includes the necessary information to build the folder hierarchy inside an ADLS Gen2 instance. It allows the user to choose the container where the folder will be created from the containers created by the *Storage component dependency*.  It also allows the user for the folder path or provides the functionality to autogenerate one. When using the automatic generation feature, it allows the user to optionally write a custom prefix path to a folder where the hierarchy will be created. 
 
-- Storage Account: Storage Account name where the directory will be located. This storage account must exist at deployment time
-- Container name: Name of the container. This container must exist at deployment time
+> The Storage Account name will be retrieved by the Specific Provisioner from the output of the provisioning task of the dependent Storage component at deployment time, as it is generated only at runtime.
+
+- Container name: Name of the container, chosen from the containers created by the *Storage component dependency*.
 - Generate folder path automatically: Whether to generate automatically the folder path or to provide the full path
 - Prefix Path: When enabling automatic generation, the user can provide a prefix path. If provided, it must end with `/`. The folder created by this component will be located in: `{{ prefixPath }}/data-products/{{ domainName }}/{{ dataProductName }}/{{ dataProductMajorVersion }}/{{ componentName }}`. All the names are normalized replacing spaces and underscores with hyphens (`-`).
 
@@ -112,7 +114,6 @@ This section includes the necessary information to build the folder hierarchy in
 
 | Field name                             | Example value    |
 |:---------------------------------------|:-----------------|
-| **Storage Account**                    | mystorageaccount |
 | **Container name**                     | my-container     |
 | **Generate folder path automatically** | ✅                |
 | **Prefix Path**                        | witboost/        |

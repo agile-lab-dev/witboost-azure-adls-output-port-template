@@ -30,6 +30,7 @@ spec:
     - title: Update component metadata
       required:
         - description
+        - dependencies
       properties:
         name:
           title: Name
@@ -83,16 +84,30 @@ spec:
           ui:property: spec.owner
           ui:options:
             allowArbitraryValues: false
-        dependsOn:
-          title: Depends on
-          type: array
-          default: []
-          items:
-            type: string
-            ui:field: EntityRelationsPicker
-            ui:fieldName: dataproduct
-            relation: hasPart
-          description: An Output Port could depend on other Output Ports or Storage Areas
+        dependencies:
+          type: object
+          ui:options:
+            displayTitle: false
+          required:
+            - dependsOn
+            - containerList
+          properties:
+            dependsOn:
+              title: Storage component dependency
+              description: ADLS Gen2 Output Ports must depend on an ADLS Gen2 Storage Area in order to extract the storage account and container information
+              type: string
+              ui:field: EntityRelationsPicker
+              ui:fieldName: dataproduct
+              relation: hasPart
+              ui:filters:
+                - key: spec.mesh.useCaseTemplateId
+                  value: "urn:dmb:utm:azure-storage-adlsgen2-template:0.0.0"
+            containerList:
+              ui:widget: hidden
+              title: Container list
+              ui:field: EntitySelectionPicker
+              ui:fieldName: dependencies.dependsOn
+              ui:property: spec.mesh.specific.containers
         tags:
           title: Tags
           type: array
@@ -362,36 +377,22 @@ spec:
 
     - title: Provide ADLS Gen2 directory information
       description: |-
-        This template will expose a folder inside an existing ADLS Gen2 Storage Account, creating the folder if not existent
+        This template will expose a folder inside an existing ADLS Gen2 Storage Account, creating the folder if not existent. 
+        The **Storage Account** name will be retrieved from the Storage Area dependency output.
+        
+        You can leave these values empty for the meantime, but in order for the deployment to be successful, they must be filled out
       required:
-        - storageAccount
         - containerName
+        - folder
       properties:
-        storageAccount:
-          title: Storage Account
-          type: string
-          description: Existing Storage Account name where the directory will be located
-          ui:field: RegexPicker
-          validation:
-            errorMessage: The field should only contain lowercase letters and numbers. Name
-              must be between 3 and 24 characters.
-            regularExpression: ^[a-z0-9]{3,24}$
-          ui:options:
-            allowArbitraryValues: true
         containerName:
           title: Container name
-          type: string
-          description: Name of the container.
-          minLength: 3
-          maxLength: 63
-          ui:field: EntityNamePicker
-          pattern: ^[a-z0-9]+(?:-[a-z0-9]+)*$
-          ui:help: The field should only contain lowercase letters, numbers, and hyphens,
-            and must begin with a letter or a number. Each hyphen must be
-            preceded and followed by a non-hyphen character. The name must
-            also be between 3 and 63 characters long.
-          ui:options:
-            allowArbitraryValues: true
+          type: object
+          description: Name of the container. This container must exist when deploying this component
+          ui:field: DescriptorPicker
+          sourceType: field
+          source: dependencies
+          optionsAt: containerList
         folder:
           title: Folder specification
           type: object
@@ -451,6 +452,7 @@ spec:
                 properties:
                   fileFormat:
                     const: Other
+                required: [ fileFormat ]
               then:
                 required:
                   - otherFileFormat
@@ -476,7 +478,7 @@ spec:
           dataproduct: '${{ parameters.dataproduct }}'
           identifier: '${{ parameters.identifier }}'
           developmentGroup: '${{ parameters.developmentGroup }}'
-          dependsOn: '${{ parameters.dependsOn }}'
+          dependsOn: '${{ parameters.dependencies.dependsOn }}'
           processDescription: '${{ parameters.processDescription }}'
           intervalOfChange: '${{ parameters.intervalOfChange }}'
           timeliness: '${{ parameters.timeliness }}'
@@ -491,8 +493,7 @@ spec:
           limitations: '${{ parameters.limitations }}'
           lifeCycle: '${{ parameters.lifeCycle }}'
           confidentiality: '${{ parameters.confidentiality }}'
-          storageAccount: '${{ parameters.storageAccount }}'
-          containerName: '${{ parameters.containerName }}'
+          containerName: '${{ parameters.containerName.value }}'
           autogeneratePath: '${{ parameters.folder.autogeneratePath }}'
           prefixPath: '${{ parameters.folder.prefixPath }}'
           folderPath: '${{ parameters.folder.folderPath }}'

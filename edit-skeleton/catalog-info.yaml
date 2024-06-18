@@ -13,8 +13,8 @@ spec:
   mesh:
     fullyQualifiedName: ${{ values.fullyQualifiedName | dump }}
     description: ${{ values.description | dump }}
-    dependsOn: {% if values.dependsOn | length > 0 %}{% for i in values.dependsOn %}
-      - ${{ i }}{% endfor %}{% else %}[]{% endif %}
+    dependsOn:
+      - ${{ values.dependsOn }}
     tags: {% if values.tags | length > 0 %}{% for i in values.tags %}
       - tagFQN: ${{ i }}
         source: Tag
@@ -68,7 +68,6 @@ spec:
     sampleData: {}
     semanticLinking: []
     specific:
-      storageAccount: ${{ values.storageAccount }}
       container: ${{ values.containerName }}
       path: {% if values.autogeneratePath %}
         ${{ values.prefixPath if values.prefixPath else "" }}data-products/${{ domainNameNormalized }}/${{ dataProductNameNormalized }}/${{ dataProductMajorVersion }}/${{ componentNameNormalized }}

@@ -5,7 +5,7 @@ kind:                     "outputport"
 version:                  string & =~"^[0-9]+\\.[0-9]+\\..+$"
 infrastructureTemplateId: string
 useCaseTemplateId:        string
-dependsOn: [...string]
+dependsOn: [string]
 platform:             "Azure"
 technology:           "ADLSGen2"
 outputPortType:       "Files"
@@ -14,10 +14,9 @@ dataSharingAgreement: #DataSharingAgreement
 tags: [...string]
 readsFrom: [...string]
 specific: {
-	storageAccount: string & =~"^[a-z0-9]{3,24}$"
-	container:      string & =~"^[a-z0-9]+(?:-[a-z0-9]+)*$"
-	path:           string & =~"^[^/]+(?:/[^/]+)*$"
-	fileFormat:     string
+	container:  string & =~"^[a-z0-9]+(?:-[a-z0-9]+)*$"
+	path:       string & =~"^[^/]+(?:/[^/]+)*$"
+	fileFormat: string
 }
 
 #OM_DataType: string & =~"(?i)^(TINYINT|SMALLINT|INT|BIGINT|DOUBLE|DECIMAL|TIMESTAMP|DATE|STRING|TEXT|CHAR|VARCHAR|BOOLEAN|ARRAY|MAP|STRUCT|UNION)$"
