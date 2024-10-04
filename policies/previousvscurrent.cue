@@ -3,9 +3,9 @@ import "list"
 import "strings"
 
 #Component: {
-	kind:                     string & =~"(?-i)^(outputport|workload|storage|observability)$"
-	useCaseTemplateId:        string
-	infrastructureTemplateId: string
+	kind!:                     string & =~"(?-i)^(outputport|workload|storage|observability)$"
+	useCaseTemplateId!:        string
+	infrastructureTemplateId!: string
 	if kind != _|_ {
 		if kind =~ "(?-i)^(outputport)$" && useCaseTemplateId == "urn:dmb:utm:azure-outputport-adlsgen2-template:0.0.0" {
 			#OutputPort
@@ -15,10 +15,10 @@ import "strings"
 }
 
 #OutputPort: {
-	id: string
+	id!: string
 	specific: {
-		path:       string
-		fileFormat: string
+		path!:       string
+		fileFormat!: string
 		...
 	}
 	...

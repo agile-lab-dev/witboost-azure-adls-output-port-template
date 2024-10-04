@@ -104,7 +104,7 @@ Provide the schema metadata of the files stored in the folder to be created.
 
 This section includes the necessary information to build the folder hierarchy inside an ADLS Gen2 instance. It allows the user to choose the container where the folder will be created from the containers created by the *Storage component dependency*.  It also allows the user for the folder path or provides the functionality to autogenerate one. When using the automatic generation feature, it allows the user to optionally write a custom prefix path to a folder where the hierarchy will be created. 
 
-> The Storage Account name will be retrieved by the Specific Provisioner from the output of the provisioning task of the dependent Storage component at deployment time, as it is generated only at runtime.
+> The Storage Account name will be retrieved by the Tech Adapter from the output of the provisioning task of the dependent Storage component at deployment time, as it is generated only at runtime.
 
 - Container name: Name of the container, chosen from the containers created by the *Storage component dependency*.
 - Generate folder path automatically: Whether to generate automatically the folder path or to provide the full path

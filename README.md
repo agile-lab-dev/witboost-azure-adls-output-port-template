@@ -4,7 +4,7 @@
     </a>
 </p>
 
-Designed by [Agile Lab](https://www.agilelab.it/), Witboost is a versatile platform that addresses a wide range of sophisticated data engineering challenges. It enables businesses to discover, enhance, and productize their data, fostering the creation of automated data platforms that adhere to the highest standards of data governance. Want to know more about witboost? Check it out [here](https://www.agilelab.it/witboost) or [contact us!](https://www.agilelab.it/contacts)
+Designed by [Agile Lab](https://www.agilelab.it/), Witboost is a versatile platform that addresses a wide range of sophisticated data engineering challenges. It enables businesses to discover, enhance, and productize their data, fostering the creation of automated data platforms that adhere to the highest standards of data governance. Want to know more about witboost? Check it out [here](https://www.witboost.com) or [contact us!](https://www.witboost.com/contact-us)
 
 This repository is part of our [Starter Kit](https://github.com/agile-lab-dev/witboost-starter-kit) meant to showcase Witboost integration capabilities and provide a "batteries-included" product.
 
@@ -17,13 +17,15 @@ This repository is part of our [Starter Kit](https://github.com/agile-lab-dev/wi
 
 Use this template to create an Output Port exposing a folder located on an Azure ADLS Gen2 instance, managing the access control to it and its children.
 
-Refer to the [witboost Starter Kit repository](https://github.com/agile-lab-dev/witboost-starter-kit) for information on the Specific Provisioner that can be used to deploy components created with this template.
+![Overview](docs/img/hld-Provisioning.png)
+
+Refer to the [witboost Starter Kit repository](https://github.com/agile-lab-dev/witboost-starter-kit) for information on the Tech Adapter that can be used to deploy components created with this template.
 
 ### What's a Template?
 
 A Template is a tool that helps create components inside a Data Mesh. Templates help establish a standard across the organization. This standard leads to easier understanding, management and maintenance of components. Templates provide a predefined structure so that developers don't have to start from scratch each time, which leads to faster development and allows them to focus on other aspects, such as testing and business logic.
 
-For more information, please refer to the [official documentation](https://docs.witboost.agilelab.it/docs/p1_user/p6_advanced/p6_1_templates/#getting-started).
+For more information, please refer to the [official documentation](https://docs.witboost.com/docs/p1_user/p6_advanced/p6_1_templates/#getting-started).
 
 ### What's an Output Port?
 
@@ -55,7 +57,7 @@ To get information on how to use this template, refer to this [document](./docs/
 
 To verify the component before deploying it along with the Data Product, the component needs to be tested against a CUE Policy defined for [ADLS Gen2 Output Port](./policies/outputport.cue). This policy needs to be defined inside the **Governance** section of the Witboost Platform.
 
-For more information, please refer to the [official documentation](https://docs.witboost.agilelab.it/docs/p1_user/p5_managing_policies/p5_1_overview).
+For more information, please refer to the [official documentation](https://docs.witboost.com/docs/p1_user/p5_managing_policies/p5_1_overview).
 
 
 ## License
