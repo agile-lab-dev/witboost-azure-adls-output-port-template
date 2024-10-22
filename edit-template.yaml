@@ -37,10 +37,6 @@ spec:
           type: string
           description: Required name used for display purposes
           ui:disabled: true
-        fullyQualifiedName:
-          title: Fully Qualified Name
-          type: string
-          description: Output Port fully qualified name
         description:
           title: Description
           type: string
@@ -472,7 +468,6 @@ spec:
         targetPath: '.'
         values:
           name: '${{ parameters.name }}'
-          fullyQualifiedName: '${{ parameters.fullyQualifiedName }}'
           description: '${{ parameters.description }}'
           domain: '${{ parameters.domain }}'
           dataproduct: '${{ parameters.dataproduct }}'

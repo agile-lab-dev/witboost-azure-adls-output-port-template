@@ -22,7 +22,7 @@ spec:
   domain: ${{ values.domain | dump }}
   mesh:
     name: ${{ values.name | dump }}
-    fullyQualifiedName: ${{ values.fullyQualifiedName | dump }}
+    fullyQualifiedName: ${{ values.domainName }} - ${{ values.dataproductName }} - version ${{ dataProductMajorVersion }} - ${{ values.name }}
     description: ${{ values.description | dump }}
     kind: outputport
     version: ${{ dataProductMajorVersion + ".0.0" }}
