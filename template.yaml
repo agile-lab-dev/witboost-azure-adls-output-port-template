@@ -111,6 +111,7 @@ spec:
                 - key: spec.mesh.useCaseTemplateId
                   value: "urn:dmb:utm:azure-storage-adlsgen2-template:0.0.0"
             containerList:
+              type: array
               ui:widget: hidden
               title: Container list
               ui:field: EntitySelectionPicker
